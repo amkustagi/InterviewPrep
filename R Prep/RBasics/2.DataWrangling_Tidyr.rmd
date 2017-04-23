@@ -1,0 +1,121 @@
+---
+title: "2. DataWrangling , "Tidyr""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+title: 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# tidyr
+
+## What is tidyr?
+
+tidyr is an R package that makes it easy to "tidy" your data frames.
+
+It has a core set of "verbs" (functions) that handle most of our essential needs.
+
+In this session, we'll look at the following:
+
+- `unite()`
+- `separate()`
+- `gather()`
+- `spread()`
+
+## Getting tidyr
+```{r, eval = F}
+
+# Load it into your workspace
+library(tidyr)
+library(dplyr)
+
+```
+
+## Function Style
+
+Just like functions in `dplyr`, the "verbs" of tidyr all share a similar format:
+
+- their first argument is a data frame.
+- subsequent arguments are specific to the function.
+- they all return a data frame.
+
+When referencing column names, we don't need quotation marks ""
+
+# Time to tidy...
+
+## Combine two variables into one with `unite()`
+
+If you have two variables you'd like to combine into one, use `unite()`
+
+```{r}
+getwd()
+# setwd("C:/Users/avina/Desktop/Interview/DataMining in R/0. dplyr-tutorial Project")
+d <- "flight-times.csv" %>%
+  read.csv()
+d <- dplyr::tbl_df(d)
+```
+
+## 1. Combine two variables into one with `unite()`
+
+Say we wanted to combine `carrier` and `fl_num` to get a single `flight` variable.
+
+```{r}
+dplyr::glimpse(d)
+dat <- select(d, carrier, fl_num, origin, dest)
+unite(dat, flight, carrier, fl_num)
+unite(dat, flight, carrier, fl_num, sep = "") %>% head(2)
+mod <- unite(dat, flight, carrier, fl_num, sep = "-")
+head(mod, n = 3)
+
+```
+
+## 2. Separate a single column with `separate()`
+
+Say all we had was `flight`, but wanted to get `carrier` and `fl_num`.
+
+```{r}
+separate(mod, flight, into = c("carrier", "flight_num"), sep = "-")
+```
+
+
+
+## 3. Gather multiple columns together with `gather()`
+
+Convert multiple columns into two columns: a key and a value.
+
+Useful for going from wide format to long format.
+
+`gather(data, key.name, value.name, columns.to.gather)`
+
+
+```{r}
+d <- read.csv("energy.csv")
+d <- dplyr::tbl_df(d)
+dplyr::glimpse(d)
+
+gather(d, exercise, energy, Running:Cycling)
+```
+
+## 4. Spread key-value columns with `spread()`
+
+Convert two columns, representing a key and value, into multiple columns.
+
+Useful for getting from long to wide format.
+
+Say we started in long format:
+
+```{r}
+d <- gather(d, exercise, energy, Running:Cycling) 
+head(d,n =2)
+d %>% spread(exercise, energy)
+```
+

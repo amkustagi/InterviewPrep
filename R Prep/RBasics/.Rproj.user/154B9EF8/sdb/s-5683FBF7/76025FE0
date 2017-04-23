@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"2. DataWrangling , \"Tidyr\"\"\noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n---\ntitle: \noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n# tidyr\n\n## What is tidyr?\n\ntidyr is an R package that makes it easy to \"tidy\" your data frames.\n\nIt has a core set of \"verbs\" (functions) that handle most of our essential needs.\n\nIn this session, we'll look at the following:\n\n- `unite()`\n- `separate()`\n- `gather()`\n- `spread()`\n\n## Getting tidyr\n```{r, eval = F}\n\n# Load it into your workspace\nlibrary(tidyr)\nlibrary(dplyr)\n\n```\n\n## Function Style\n\nJust like functions in `dplyr`, the \"verbs\" of tidyr all share a similar format:\n\n- their first argument is a data frame.\n- subsequent arguments are specific to the function.\n- they all return a data frame.\n\nWhen referencing column names, we don't need quotation marks \"\"\n\n# Time to tidy...\n\n## Combine two variables into one with `unite()`\n\nIf you have two variables you'd like to combine into one, use `unite()`\n\n```{r}\ngetwd()\n# setwd(\"C:/Users/avina/Desktop/Interview/DataMining in R/0. dplyr-tutorial Project\")\nd <- \"flight-times.csv\" %>%\n  read.csv()\nd <- dplyr::tbl_df(d)\n```\n\n## 1. Combine two variables into one with `unite()`\n\nSay we wanted to combine `carrier` and `fl_num` to get a single `flight` variable.\n\n```{r}\ndplyr::glimpse(d)\ndat <- select(d, carrier, fl_num, origin, dest)\nunite(dat, flight, carrier, fl_num)\nunite(dat, flight, carrier, fl_num, sep = \"\") %>% head(2)\nmod <- unite(dat, flight, carrier, fl_num, sep = \"-\")\nhead(mod, n = 3)\n\n```\n\n## 2. Separate a single column with `separate()`\n\nSay all we had was `flight`, but wanted to get `carrier` and `fl_num`.\n\n```{r}\nseparate(mod, flight, into = c(\"carrier\", \"flight_num\"), sep = \"-\")\n```\n\n\n\n## 3. Gather multiple columns together with `gather()`\n\nConvert multiple columns into two columns: a key and a value.\n\nUseful for going from wide format to long format.\n\n`gather(data, key.name, value.name, columns.to.gather)`\n\n\n```{r}\nd <- read.csv(\"energy.csv\")\nd <- dplyr::tbl_df(d)\ndplyr::glimpse(d)\n\ngather(d, exercise, energy, Running:Cycling)\n```\n\n## 4. Spread key-value columns with `spread()`\n\nConvert two columns, representing a key and value, into multiple columns.\n\nUseful for getting from long to wide format.\n\nSay we started in long format:\n\n```{r}\nd <- gather(d, exercise, energy, Running:Cycling) \nhead(d,n =2)\nd %>% spread(exercise, energy)\n```\n\n",
+    "created" : 1491524915289.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1655067810",
+    "id" : "76025FE0",
+    "lastKnownWriteTime" : 1491525380,
+    "last_content_update" : 1491525380139,
+    "path" : "C:/Users/avina/Desktop/Prep/RangTech/R Prep/RBasics/2.DataWrangling_Tidyr.rmd",
+    "project_path" : "2.DataWrangling_Tidyr.rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

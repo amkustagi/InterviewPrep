@@ -1,0 +1,681 @@
+---
+title: "1. RPrograms"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. PRINT HELLO WORLD
+```{r}
+# We can use the print() function
+print("Hello World!")
+#[1] "Hello World!"
+
+# Quotes can be suppressed in the output
+print("Hello World!", quote = FALSE)
+# [1] Hello World!
+
+# If there are more than 1 item, we can concatenate using paste()
+print(paste("How","are","you?"))
+# [1] "How are you?"
+
+print(cat("How","are","you?"))
+
+```
+
+
+#2 ADDING VECTORS
+```{r}
+
+x <- c(3,6,8)
+x
+# [1] 3 6 8
+
+y <- c(2,9,0)
+y
+# [1] 2 9 0
+
+x + y
+# [1]  5 15  8
+
+x + 1    # 1 is recycled to (1,1,1)
+# [1] 4 7 9
+
+x + c(1,4)    # (1,4) is recycled to (1,4,1) but warning issued
+# [1]  4 10  9
+# Warning message:
+# In x + c(1, 4) :
+# longer object length is not a multiple of shorter object length
+```
+
+
+# 3 Find Sum, Mean and Product of Vector in R Programming
+
+Example: Vector Elements Arithmetic
+```{r}
+
+sum(2,7,5)
+[1] 14
+
+x <- c(2, NA,  3,  1,  4)
+x
+# [1]  2 NA  3  1  4
+
+sum(x)    # if any element is NA or NaN, result is NA or NaN
+# [1] NA
+
+sum(x, na.rm=TRUE)    # this way we can ignore NA and NaN values
+# [1] 10
+
+mean(x, na.rm=TRUE)
+# [1] 2.5
+
+prod(x, na.rm=TRUE)
+# [1] 24
+
+```
+
+
+# 4. R Program to Take Input From User
+```{r}
+my.name <- readline(prompt="Enter name: ")
+my.age <- readline(prompt="Enter age: ")
+
+# convert character into integer
+my.age <- as.integer(my.age)
+
+print(paste("Hi,", my.name, "next year you will be", my.age+1, "years old."))
+
+```
+
+
+
+# 5.  R Program to Generate Random Number from Standard Distributions
+
+Example: Uniform Distribution
+
+```{r}
+runif(1)    # generates 1 random number
+# [1] 0.3984754
+
+runif(3)    # generates 3 random number
+# [1] 0.8090284 0.1797232 0.6803607
+
+runif(3, min=5, max=10)    # define the range between 5 and 10
+# [1] 7.099781 8.355461 5.173133
+```
+
+
+From Normal Distribution
+```{r}
+rnorm(1)    # generates 1 random number
+# [1] 1.072712
+
+rnorm(3)    # generates 3 random number
+# [1] -1.1383656  0.2016713 -0.4602043
+
+rnorm(3, mean=10, sd=2)    # provide our own mean and standard deviation
+# [1]  9.856933  9.024286 10.822507
+```
+
+
+# 6 R Program to Sample from a Population
+
+```{r}
+x <- c(1,3,5,7,9,11,13,15,17) ; x
+#[1]  1  3  5  7  9 11 13 15 17
+
+# sample 2 items from x
+sample(x, 2)
+#[1] 13  9
+
+
+# sample with replacement
+sample(x, replace = TRUE)
+#[1] 15 17 13  9  5 15 11 15  1
+
+# if we simply pass in a positive number n, it will sample
+# from 1:n without replacement
+sample(10)
+# [1]  2  4  7  9  1  3 10  5  8  6
+
+
+sample(c("H","T"),10, replace = TRUE)
+# [1] "H" "H" "H" "T" "H" "T" "H" "H" "H" "T"
+
+```
+
+
+
+# 7 R Program to Find Minimum and Maximum
+
+```{r}
+x <- c(5,8,3,9,2,7,4,6,10); x
+# [1]  5  8  3  9  2  7  4  6 10
+
+# find the minimum
+min(x)
+# [1] 2
+
+# find the maximum
+max(x)
+# [1] 10
+
+# find the range
+range(x)
+# [1]  2 10
+
+```
+
+If we want to find where the minimum or maximum is located, i.e. the index instead of the actual value, then we can use which.min() and which.max() functions.
+
+```{r}
+x <- c(5,8,3,9,2,7,4,6,10); x
+# [1]  5  8  3  9  2  7  4  6 10
+
+# find index of the minimum
+which.min(x)
+# [1] 5
+
+# find index of the minimum
+which.max(x)
+# [1] 9
+
+# alternate way to find the minimum
+x[which.min(x)]
+# [1] 2
+```
+
+
+
+# 8 R Program to Sort a Vector
+
+```{r}
+x <- c(7,1,8,3,2,6,5,2,2,4); x
+# [1] 7 1 8 3 2 6 5 2 2 4
+
+# sort in ascending order
+sort(x)
+# [1] 1 2 2 2 3 4 5 6 7 8
+
+# sort in descending order
+sort(x, decreasing=TRUE)
+# [1] 8 7 6 5 4 3 2 2 2 1
+
+# vector x remains unaffected
+x
+# [1] 7 1 8 3 2 6 5 2 2 4
+```
+
+
+
+Sometimes we would want the index of the sorted vector instead of the values. In such case we can use the function order()
+
+```{r}
+order(x)
+# [1]  2  5  8  9  4 10  7  6  1  3
+
+order(x, decreasing=TRUE)
+# [1]  3  1  6  7 10  4  5  8  9  2
+
+x[order(x)]    # this will also sort x
+# [1] 1 2 2 2 3 4 5 6 7 8
+
+```
+
+# 9 R Program to Find the Factorial of a Number
+
+```{r}
+# take input from the user
+num = as.integer(readline(prompt="Enter a number: "))
+factorial = 1
+
+# check is the number is negative, positive or zero
+if(num < 0) {
+    print("Sorry, factorial does not exist for negative numbers")
+} else if(num == 0) {
+    print("The factorial of 0 is 1")
+} else {
+    for(i in 1:num) {
+        factorial = factorial * i
+    }
+    print(paste("The factorial of", num ,"is",factorial))
+}
+```
+
+
+
+# 10. R Multiplication Table
+
+```{r}
+# Program to find the multiplication
+# table (from 1 to 10)
+# of a number input by the user
+
+# take input from the user
+num = as.integer(readline(prompt = "Enter a number: "))
+
+# use for loop to iterate 10 times
+for(i in 1:10) {
+    print(paste(num,'x', i, '=', num*i))
+}
+```
+
+
+
+# 11. R Program to Check Prime Number
+```{r}
+# Program to check if
+# the input number is
+# prime or not
+
+# take input from the user
+num = as.integer(readline(prompt="Enter a number: "))
+
+flag = 0
+# prime numbers are greater than 1
+if(num > 1) {
+    # check for factors
+    flag = 1
+    for(i in 2:(num-1)) {
+        if ((num %% i) == 0) {
+            flag = 0
+            break
+        }
+    }
+} 
+
+if(num == 2)    flag = 1
+if(flag == 1) {
+    print(paste(num,"is a prime number"))
+} else {
+    print(paste(num,"is not a prime number"))
+}
+```
+
+# 12 R Program to check Armstrong Number
+
+An Armstrong number, also known as narcissistic number, is a number that is equal to the sum of the cubes of its own digits.
+
+For example, 370 is an Armstrong number since 370 = 3*3*3 + 7*7*7 + 0*0*0.
+
+```{r}
+# take input from the user
+num = as.integer(readline(prompt="Enter a number: "))
+
+# initialize sum
+sum = 0
+
+# find the sum of the cube of each digit
+temp = num
+while(temp > 0) {
+    digit = temp %% 10
+    sum = sum + (digit ^ 3)
+    temp = floor(temp / 10)
+}
+
+# display the result
+if(num == sum) {
+    print(paste(num, "is an Armstrong number"))
+} else {
+    print(paste(num, "is not an Armstrong number"))
+}
+```
+
+# 13 R Program to Print the Fibonacci Sequence
+
+A Fibonacci sequence is the integer sequence of
+
+0, 1, 1, 2, 3, 5, 8....
+
+```{r}
+# take input from the user
+nterms = as.integer(readline(prompt="How many terms? "))
+
+# first two terms
+n1 = 0
+n2 = 1
+count = 2
+
+# check if the number of terms is valid
+if(nterms <= 0) {
+    print("Plese enter a positive integer")
+} else {
+    if(nterms == 1) {
+        print("Fibonacci sequence:")
+        print(n1)
+    } else {
+        print("Fibonacci sequence:")
+        print(n1)
+        print(n2)
+        while(count < nterms) {
+            nth = n1 + n2
+            print(nth)
+            # update values
+            n1 = n2
+            n2 = nth
+            count = count + 1
+        }
+    }
+}
+```
+
+
+# 14 R Program to Check for Leap Year
+
+```{r}
+# Program to check if
+# the input year is
+# a leap year or not
+
+year = as.integer(readline(prompt="Enter a year: "))
+if((year %% 4) == 0) {
+    if((year %% 100) == 0) {
+        if((year %% 400) == 0) {
+            print(paste(year,"is a leap year"))
+        } else {
+            print(paste(year,"is not a leap year"))
+        }
+    } else {
+        print(paste(year,"is a leap year"))
+    }
+} else {
+    print(paste(year,"is not a leap year"))
+}
+```
+
+
+
+# 15 Check if a Number is Odd or Even in R Programming
+
+```{r}
+# Program to check if
+# the input number is odd or even.
+# A number is even if division
+# by 2 give a remainder of 0.
+# If remainder is 1, it is odd.
+
+num = as.integer(readline(prompt="Enter a number: "))
+if((num %% 2) == 0) {
+    print(paste(num,"is Even"))
+} else {
+    print(paste(num,"is Odd"))
+}
+```
+
+# 16 R Program to Check if a Number is Positive, Negative or Zero
+```{r}
+# In this program, we input a number
+# check if the number is positive or
+# negative or zero and display
+# an appropriate message
+
+num = as.double(readline(prompt="Enter a number: "))
+if(num > 0) {
+    print("Positive number")
+} else {
+    if(num == 0) {
+        print("Zero")
+    } else {
+        print("Negative number")
+    }
+}
+```
+
+# 17 R Program to Find the Sum of Natural Numbers
+
+```{r}
+# take input from the user
+num = as.integer(readline(prompt = "Enter a number: "))
+
+if(num < 0) {
+    print("Enter a positive number")
+} else {
+    sum = 0
+
+    # use while loop to iterate until zero
+    while(num > 0) {
+        sum = sum + num
+        num = num - 1
+    }
+
+    print(paste("The sum is", sum))
+}
+```
+
+From mathematics, we know that sum of natural numbers is given by
+
+n*(n+1)/2
+
+```{r}
+# take input from the user
+num = as.integer(readline(prompt = "Enter a number: "))
+
+if(num < 0) {
+    print("Enter a positive number")
+} else {
+    sum = (num * (num + 1)) / 2;
+
+    print(paste("The sum is", sum))
+}
+```
+
+
+# 18. Convert Decimal into Binary using Recursion in R
+
+```{r}
+# Program to convert decimal
+# number into binary number
+# using recursive function
+
+convert_to_binary <- function(n) {
+
+    if(n > 1) {
+        convert_to_binary(as.integer(n/2))
+    }
+    cat(n %% 2)
+}
+```
+
+
+
+# 19 R program to Find the Factorial of a Number Using Recursion
+```{r}
+recur_factorial <- function(n) {
+    if(n <= 1) {
+        return(1)
+    } else { 
+        return(n * recur_factorial(n-1))
+    }
+}
+```
+
+
+# 20. R Program to Find the Factors of a Number
+```{r}
+print_factors <- function(x) {
+    print(paste("The factors of",x,"are:"))
+    for(i in 1:x) {
+        if((x %% i) == 0) {
+            print(i)
+        }
+    }
+}
+```
+
+
+# 21 Fibonacci Sequence Using Recursion in R
+
+```{r}
+# Program to diplay the Fibonacci
+# sequence up to n-th term using
+# recursive functions
+
+recurse_fibonacci <- function(n) {
+    if(n <= 1) {
+        return(n)
+    } else {
+        return(recurse_fibonacci(n-1) + recurse_fibonacci(n-2))
+    }
+}
+
+# take input from the user
+nterms = as.integer(readline(prompt="How many terms? "))
+
+# check if the number of terms is valid
+if(nterms <= 0) {
+    print("Plese enter a positive integer")
+} else {
+    print("Fibonacci sequence:")
+    for(i in 0:(nterms-1)) {
+        print(recurse_fibonacci(i))
+    }
+}
+```
+
+22. R Program to Find H.C.F. or G.C.D.
+
+```{r}
+# Program to find the
+# H.C.F of two input number
+
+# define a function
+hcf <- function(x, y) {
+    # choose the smaller number
+    if(x > y) {
+        smaller = y
+    } else {
+        smaller = x
+    }
+    for(i in 1:smaller) {
+        if((x %% i == 0) && (y %% i == 0)) {
+            hcf = i
+        }
+    }
+    return(hcf)
+}
+
+# take input from the user
+num1 = as.integer(readline(prompt = "Enter first number: "))
+num2 = as.integer(readline(prompt = "Enter second number: "))
+
+print(paste("The H.C.F. of", num1,"and", num2,"is", hcf(num1, num2)))
+```
+
+
+
+Euclidean algorithm to Find GCD
+This algorithm is based on the fact that H.C.F. of two numbers divides their difference as well.
+
+In this algorithm, we divide the greater by smaller and take the remainder. Now, divide the smaller by this remainder. Repeat until the remainder is 0.
+
+For example, if we want to find the H.C.F. of 54 and 24, we divide 54 by 24. The remainder is 6.
+
+Now, we divide 24 by 6 and the remainder is 0. Hence, 6 is the required H.C.F. We can do this in Python as follows.
+
+Example 2: GCD Using Euclidean algorithm
+```{r}
+hcf <- function(x, y) {
+    while(y) {
+        temp = y
+        y = x %% y
+        x = temp
+    }
+    return(x)
+}
+```
+
+
+# 23. R Program to Find L.C.M
+
+Example: Compute LCM in R
+
+```{r}
+# Program to find the L.C.M. of two input number
+lcm <- function(x, y) {
+    # choose the greater number
+    if(x > y) {
+        greater = x
+    } else {
+        greater = y
+    }
+
+    while(TRUE) {
+        if((greater %% x == 0) && (greater %% y == 0)) {
+            lcm = greater
+            break
+        }
+        greater = greater + 1
+    }
+    return(lcm)
+}
+
+# take input from the user
+num1 = as.integer(readline(prompt = "Enter first number: "))
+num2 = as.integer(readline(prompt = "Enter second number: "))
+
+print(paste("The L.C.M. of", num1,"and", num2,"is", lcm(num1, num2)))
+
+```
+
+
+# 24. R Program to Make a Simple Calculator
+```{r}
+# Program make a simple calculator
+# that can add, subtract, multiply
+# and divide using functions
+
+add <- function(x, y) {
+    return(x + y)
+}
+
+subtract <- function(x, y) {
+    return(x - y)
+}
+
+multiply <- function(x, y) {
+    return(x * y)
+}
+
+divide <- function(x, y) {
+    return(x / y)
+}
+
+# take input from the user
+print("Select operation.")
+print("1.Add")
+print("2.Subtract")
+print("3.Multiply")
+print("4.Divide")
+
+choice = as.integer(readline(prompt="Enter choice[1/2/3/4]: "))
+
+num1 = as.integer(readline(prompt="Enter first number: "))
+num2 = as.integer(readline(prompt="Enter second number: "))
+
+operator <- switch(choice,"+","-","*","/")
+result <- switch(choice, add(num1, num2), subtract(num1, num2), multiply(num1, num2), divide(num1, num2))
+
+print(paste(num1, operator, num2, "=", result))
+```
+
+
+
+# 25. Sum of Natural Numbers Using Recursion
+
+```{r}
+# Program to find the sum of
+# natural numbers upto n
+# using recursive function
+
+calculate_sum() <- function(n) {
+    if(n <= 1) {
+        return(n)
+    } else {
+        return(n + calculate_sum(n-1))
+    }
+}
+```
+
